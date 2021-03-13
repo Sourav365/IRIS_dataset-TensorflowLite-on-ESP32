@@ -8,16 +8,19 @@ Run any ML model on ESP32 board.
 Create your own ML model
 
 ### 2. Convert tensorflow model to tensorflowLite model for microcontroller.
-`# Convert Keras model to a tflite model
+```
+#Convert Keras model to a tflite model
 
 converter = tf.lite.TFLiteConverter.from_keras_model(model)
 tflite_model = converter.convert()
 
-# Save the model to disk
-open(tflite_model_name + '.tflite', "wb").write(tflite_model)`
+#Save the model to disk
+open(tflite_model_name + '.tflite', "wb").write(tflite_model)
+```
 
 ### 3. Copy the c-array file. (".h" file)
-`#Function: Convert some hex value into an array for C programming
+```
+#Function: Convert some hex value into an array for C programming
 def hex_to_c_array(hex_data, var_name):
 
   c_str = ''
@@ -50,15 +53,20 @@ def hex_to_c_array(hex_data, var_name):
   #Close out header guard
   c_str += '#endif //' + var_name.upper() + '_H'
 
-  return c_str`
+  return c_str
+```
 
 
-`#Write TFLite model to a C source (or header) file
+
+```
+#Write TFLite model to a C source (or header) file
 with open(c_model_name + '.h', 'w') as file:
-  file.write(hex_to_c_array(tflite_model, c_model_name))`
+  file.write(hex_to_c_array(tflite_model, c_model_name))
+```
   
 ### 4. Run Arduino code.
-`#include <EloquentTinyML.h>
+```
+#include <EloquentTinyML.h>
 #include "iris.h"
 
 #define NUMBER_OF_INPUTS 4
@@ -85,7 +93,8 @@ void loop() {
     Serial.println(ml.probaToClass(y_pred));
     
     delay(1000);
-}`
+}
+```
 
 
 
